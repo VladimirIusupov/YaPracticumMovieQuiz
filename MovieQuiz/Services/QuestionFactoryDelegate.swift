@@ -1,5 +1,5 @@
 import UIKit
 
-protocol QuestionFactoryDelegate: AnyObject {
-    func didReceiveNextQuestion(question: QuizQuestion?)
+protocol QuestionFactoryDelegate:AnyObject{
+    func didRecieveNextQuestion(question: QuizQuestion?)
 }

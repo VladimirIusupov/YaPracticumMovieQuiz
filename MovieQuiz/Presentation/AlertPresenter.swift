@@ -7,25 +7,25 @@
 
 import UIKit
 
-class AlertPresenter: AlertPresenterProtocol {
-
-
-    weak var delegate:  AlertPresenterDelegate?
-    func setup(delegate: AlertPresenterDelegate){
-        self.delegate = delegate
+final class AlertPresenter {
+    
+    weak var delegate: AlertPresenterDelegate?
+    weak var viewController: UIViewController?
+    init(viewController: UIViewController) {
+        self.viewController = viewController
     }
-    private var viewController = UIViewController()
-    func presentAlert(with result:AlertModel) {
-        let alert = UIAlertController(title: result.title, message: result.message, preferredStyle: .alert)
-        let action = UIAlertAction(title: result.buttonText, style: .default) {
-            [weak self] _ in
-            guard let self = self else {return}
-            alert.addAction(action)
-            self.viewController.present(alert, animated: true, completion: nil)
+    
+    func presentAlert(with model: AlertModel?) {
+        let alert = UIAlertController(
+            title: model?.title,
+            message: model?.message,
+            preferredStyle: .alert)
+                
+        let action = UIAlertAction(title: model?.buttonText, style: .default) {[weak self] _ in
+            model?.completion?()
+            self?.delegate?.presentAlert()
         }
-    }
-
-
-
+            alert.addAction(action)
+            viewController?.present(alert, animated: true, completion: nil)
+        }
 }
-
