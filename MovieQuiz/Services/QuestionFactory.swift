@@ -1,16 +1,10 @@
-//
-//  QuestionFactory.swift
-//  MovieQuiz
-//
-//  Created by Vladimir Iusupov on 03.10.2024.
-//
-
 import UIKit
 
 
-class QuestionFactory: QuestionFactoryProtocol {
+final class QuestionFactory:QuestionFactoryProtocol {
     weak var delegate: QuestionFactoryDelegate?
-        
+
+    
     private let questions: [QuizQuestion] =  [
         QuizQuestion(image: "The Godfather", text: "Рейтинг этого фильма больше 6?", correctAnswer: true),
         QuizQuestion(image: "The Dark Knight", text: "Рейтинг этого фильма больше 6?", correctAnswer: true),
@@ -33,7 +27,7 @@ class QuestionFactory: QuestionFactoryProtocol {
         delegate?.didRecieveNextQuestion(question: question)
     }
     
-
-
-    
+    func setup(delegate: QuestionFactoryDelegate) {
+           self.delegate = delegate
+       }
 }

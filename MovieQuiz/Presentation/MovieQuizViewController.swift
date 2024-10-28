@@ -34,21 +34,19 @@ final class MovieQuizViewController:UIViewController,
         alertPresenter = AlertPresenter(viewController: self)
         alertPresenter?.delegate = self
         
-                
+        
     }
     // MARK: - QuestionFactoryDelegate
     
     func didRecieveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else {
-            return
-        }
+        guard let question = question else { return }
         currentQuestion = question
         let viewModel = convert(model: question)
-        
         DispatchQueue.main.async { [weak self] in
             self?.show(quiz: viewModel)
         }
     }
+    
     // MARK: - AlertPresenterDelegate
     
         func presentAlert() {
@@ -60,18 +58,14 @@ final class MovieQuizViewController:UIViewController,
     // MARK: - IB Actions
     
     @IBAction private func yesButtonClocked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
+        guard let currentQuestion = currentQuestion else { return }
             let givenAnswer = true
             showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         yesButton.isEnabled = false
         noButton.isEnabled = false
     }
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
+        guard let currentQuestion = currentQuestion else { return }
             let givenAnswer = false
             showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
         yesButton.isEnabled = false
@@ -83,6 +77,7 @@ final class MovieQuizViewController:UIViewController,
     private func show(currentIndex: Int){
             questionFactory.requestNextQuestion()
         }
+    
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect{
             correctAnswers+=1
@@ -94,6 +89,7 @@ final class MovieQuizViewController:UIViewController,
             self.showNextQuestionOrResults()
         }
     }
+    
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questionsAmount - 1{
             let currentDate = Date()
@@ -121,6 +117,7 @@ final class MovieQuizViewController:UIViewController,
             self.questionFactory.requestNextQuestion()
         }
     }
+    
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let questionStep = QuizStepViewModel(
             image: UIImage(named: model.image) ?? UIImage(),
@@ -128,14 +125,16 @@ final class MovieQuizViewController:UIViewController,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
         return questionStep
     }
+    
     private func show(quiz step: QuizStepViewModel) {
         yesButton.isEnabled = true
         noButton.isEnabled = true
-      imageView.image = step.image
-      textLabel.text = step.question
-      counterLabel.text = step.questionNumber
+        imageView.image = step.image
+        textLabel.text = step.question
+        counterLabel.text = step.questionNumber
         imageView.layer.borderColor = UIColor.clear.cgColor
     }
+    
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
                     title: result.title,
@@ -146,10 +145,8 @@ final class MovieQuizViewController:UIViewController,
                     self.currentQuestionIndex = 0
                     self.correctAnswers = 0
                     self.show(currentIndex: self.currentQuestionIndex)
-                    
                 }
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)
-        
     }
 }

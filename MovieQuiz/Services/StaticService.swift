@@ -1,10 +1,3 @@
-//
-//  StaticService.swift
-//  MovieQuiz
-//
-//  Created by Vladimir Iusupov on 23.10.2024.
-//
-
 import UIKit
 
 final class StatisticService: StatisticServiceProtocol{
@@ -85,6 +78,4 @@ final class StatisticService: StatisticServiceProtocol{
         case correctAnswers
         case totalAccuracy
     }
-    
-    
 }
