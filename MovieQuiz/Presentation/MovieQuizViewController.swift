@@ -11,6 +11,24 @@ final class MovieQuizViewController:UIViewController,
     @IBOutlet private var yesButton: UIButton!
     @IBOutlet private var noButton: UIButton!
     
+    // MARK: - IB Actions
+    
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        guard let currentQuestion = currentQuestion else { return }
+            let givenAnswer = true
+            showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+            yesButton.isEnabled = false
+            noButton.isEnabled = false
+    }
+
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+        guard let currentQuestion = currentQuestion else { return }
+            let givenAnswer = false
+            showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+            yesButton.isEnabled = false
+            noButton.isEnabled = false
+    }
+    
     // MARK: - Private Properties
     
     private let questionsAmount: Int = 10
@@ -55,23 +73,7 @@ final class MovieQuizViewController:UIViewController,
             show(currentIndex: currentQuestionIndex)
         }
 
-    // MARK: - IB Actions
-    
-    @IBAction private func yesButtonClocked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else { return }
-            let givenAnswer = true
-            showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        yesButton.isEnabled = false
-        noButton.isEnabled = false
-    }
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else { return }
-            let givenAnswer = false
-            showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-        yesButton.isEnabled = false
-        noButton.isEnabled = false
-    }
-    
+
     // MARK: - Private Methods
     
     private func show(currentIndex: Int){
