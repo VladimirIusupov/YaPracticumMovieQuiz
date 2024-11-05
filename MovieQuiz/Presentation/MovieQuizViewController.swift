@@ -104,7 +104,7 @@ final class MovieQuizViewController:UIViewController,
             let totalAccuracy = statisticService.totalAccuracy
             let bestGameDate = bestGame.date.dateTimeString
             let message: [String] = [
-            "Ваш результат: \(correctAnswers)",
+            "Ваш результат: \(correctAnswers)/10",
             "Количество сыгранных квизов: \(gamesCount)",
             "Рекорд: \(bestGame.correct)/10 (\(bestGameDate))",
             "Средняя точность: \("\(String(format: "%.2f", totalAccuracy))%")"

@@ -1,16 +1,12 @@
 import UIKit
 
-final class StatisticService: StatisticServiceProtocol{
+final class StatisticService: StatisticServiceProtocol {
 
     private let storage: UserDefaults = .standard
     
     var gamesCount: Int {
-        get {
-            storage.integer(forKey: Keys.gamesCount.rawValue)
-        }
-        set {
-            storage.set(newValue, forKey: Keys.gamesCount.rawValue)
-        }
+        get { storage.integer(forKey: Keys.gamesCount.rawValue) }
+        set { storage.set(newValue, forKey: Keys.gamesCount.rawValue) }
     }
     
     var bestGame: GameResult {
@@ -18,7 +14,6 @@ final class StatisticService: StatisticServiceProtocol{
             let correct = storage.integer(forKey: Keys.correct.rawValue)
             let total = storage.integer(forKey: Keys.total.rawValue)
             let date = storage.object(forKey: Keys.date.rawValue) as? Date ?? Date()
-            
             return GameResult(correct: correct, total: total, date: date)
         }
         set {
@@ -29,44 +24,39 @@ final class StatisticService: StatisticServiceProtocol{
     }
     
     var totalAccuracy: Double {
-        get {
-            return storage.double(forKey: Keys.totalAccuracy.rawValue)
-        }
-        set {
-            storage.set(newValue, forKey: Keys.totalAccuracy.rawValue)
-        }
+        get { return storage.double(forKey: Keys.totalAccuracy.rawValue) }
+        set { storage.set(newValue, forKey: Keys.totalAccuracy.rawValue) }
     }
     
     private var correctAnswers:Int {
-        get {
-            return storage.integer(forKey: Keys.correctAnswers.rawValue)
-        }
-        set {
-            storage.set(newValue, forKey: Keys.correctAnswers.rawValue)
-        }
+        get { return storage.integer(forKey: Keys.correctAnswers.rawValue) }
+        set { storage.set(newValue, forKey: Keys.correctAnswers.rawValue) }
     }
+    
     private var totalAnswers: Int {
-        get {
-            return storage.integer(forKey: Keys.totalAnswers.rawValue)
-        }
-        set {
-            storage.set(newValue, forKey: Keys.totalAnswers.rawValue)
-        }
+        get { return storage.integer(forKey: Keys.totalAnswers.rawValue) }
+        set { storage.set(newValue, forKey: Keys.totalAnswers.rawValue) }
     }
     
     func store(_ currentGameResult: GameResult) {
-        totalAccuracy = 0.0
-        let newGamesCount = gamesCount + 1
-        gamesCount = newGamesCount
-        let totalQuestionsCount = Double(gamesCount) * 10.0
-        let correctAnswersCount = totalAccuracy * totalQuestionsCount / 100.0 + Double(currentGameResult.correct)
-        totalAnswers = Int(totalQuestionsCount)
+        
+        //totalAccuracy = 0.0 // итоговый процент прираниваем к нулю
+        let newGamesCount = gamesCount + 1 // счет игр +1
+        gamesCount = newGamesCount // сохраняем счетчик игр
+        
+        let totalQuestionsCount = Double(gamesCount) * 10.0 // счетчик игр общий
+        
+        let correctAnswersCount = Double(correctAnswers) // забираем из авмяти счетчик правильных ответов
+        let newCorrectAnswersCount = correctAnswersCount + Double(currentGameResult.correct) // прибавляем ткущий результат
+        correctAnswers = Int(newCorrectAnswersCount) // сохраняем результат для рачета
+        //let correctAnswersCount = totalAccuracy * totalQuestionsCount / 100.0 + Double(currentGameResult.correct)
+        //print(totalAccuracy, totalQuestionsCount, currentGameResult.correct, correctAnswers)
+        // счет правильных ответов = итоговый процент умножаем на общеее количество ответов делим на 100 и прибаляем текущее количество текущих ответов
+        totalAnswers = Int(totalQuestionsCount) // обрачиваем в инт количество вопросов
         guard gamesCount != 0 else {return}
-        let newAccuracy = (correctAnswersCount/totalQuestionsCount) * 100
+        let newAccuracy = (newCorrectAnswersCount/totalQuestionsCount) * 100 // формула верная из ТЗ
         totalAccuracy = newAccuracy
-        if currentGameResult.isBetterThan(bestGame){
-            bestGame = currentGameResult
-        }
+        if currentGameResult.isBetterThan(bestGame) { bestGame = currentGameResult }
     }
     
     private enum Keys: String {
