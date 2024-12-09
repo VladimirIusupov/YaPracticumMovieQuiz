@@ -70,10 +70,7 @@ final class MovieQuizViewController:UIViewController,
     }
     
     func didLoadDataFromServer() {
-        //DispatchQueue.main.async {
-            self.activityIndicator.isHidden = true
-        //}
-        
+        self.activityIndicator.isHidden = true
         questionFactory?.requestNextQuestion()
     }
 
@@ -83,12 +80,11 @@ final class MovieQuizViewController:UIViewController,
     
     
     // MARK: - AlertPresenterDelegate
-    
-        func presentAlert() {
-            currentQuestionIndex = 0
-            correctAnswers = 0
-            show(currentIndex: currentQuestionIndex)
-        }
+    func presentAlert() {
+        currentQuestionIndex = 0
+        correctAnswers = 0
+        show(currentIndex: currentQuestionIndex)
+    }
 
 
     // MARK: - Private Methods
@@ -103,9 +99,8 @@ final class MovieQuizViewController:UIViewController,
         activityIndicator.stopAnimating()
     }
     
-    private func show(currentIndex: Int){
-            questionFactory?.requestNextQuestion()
-        }
+    private func show(currentIndex: Int) { questionFactory?.requestNextQuestion()
+}
     
     private func showAnswerResult(isCorrect: Bool) {
         if isCorrect{
@@ -187,7 +182,6 @@ final class MovieQuizViewController:UIViewController,
             self.correctAnswers = 0
             self.questionFactory?.requestNextQuestion()
         }
-        
         alertPresenter?.presentAlert(with: model)
     }
 
