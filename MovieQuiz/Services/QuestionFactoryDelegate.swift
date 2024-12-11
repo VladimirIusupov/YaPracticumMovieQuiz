@@ -1,5 +1,7 @@
 import UIKit
 
-protocol QuestionFactoryDelegate:AnyObject{
+protocol QuestionFactoryDelegate {
     func didRecieveNextQuestion(question: QuizQuestion?)
+    func didLoadDataFromServer()
+    func didFailToLoadData(with error: Error)
 }
