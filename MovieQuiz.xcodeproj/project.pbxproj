@@ -34,6 +34,7 @@
 		E7D4D8952D062A1900EDFB08 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D4D8942D062A1900EDFB08 /* NetworkClient.swift */; };
 		E7D4D8972D062FF700EDFB08 /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D4D8962D062FF700EDFB08 /* MostPopularMovies.swift */; };
 		E7D4D8992D06309F00EDFB08 /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D4D8982D06309F00EDFB08 /* MoviesLoader.swift */; };
+		E7E2A3222D0B151500C6587B /* MovieQuizPresenter.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E2A3212D0B151500C6587B /* MovieQuizPresenter.swift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		E7D4D8942D062A1900EDFB08 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 		E7D4D8962D062FF700EDFB08 /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
 		E7D4D8982D06309F00EDFB08 /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
+		E7E2A3212D0B151500C6587B /* MovieQuizPresenter.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieQuizPresenter.swift.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -152,6 +154,7 @@
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
 				E7BE36E92CB9C85A00CC39A4 /* AlertPresenter.swift */,
+				E7E2A3212D0B151500C6587B /* MovieQuizPresenter.swift.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				E7BE36D72CAE9F1400CC39A4 /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				E7BE36F32CC9017E00CC39A4 /* StaticsticServiceProtocol.swift in Sources */,
+				E7E2A3222D0B151500C6587B /* MovieQuizPresenter.swift.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
 				E7D4D8992D06309F00EDFB08 /* MoviesLoader.swift in Sources */,
 				E7BE36DC2CB01CEE00CC39A4 /* QuizResultsViewModel.swift in Sources */,
