@@ -24,12 +24,10 @@ final class MovieQuizViewController:UIViewController,
     // MARK: - Actions
 
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        presenter.currentQuestion = presenter.currentQuestion
         presenter.yesButtonClicked()
     }
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        presenter.currentQuestion = presenter.currentQuestion
         presenter.yesButtonClicked()
     }
 
@@ -53,14 +51,8 @@ final class MovieQuizViewController:UIViewController,
         
     }
     // MARK: - QuestionFactoryDelegate
-    
     func didRecieveNextQuestion(question: QuizQuestion?) {
-        guard let question = question else { return }
-        presenter.currentQuestion = question
-        let viewModel = presenter.convert(model: question)
-        DispatchQueue.main.async { [weak self] in
-            self?.show(quiz: viewModel)
-        }
+        presenter.didRecieveNextQuestion(question: question)
     }
     
     func didLoadDataFromServer() {
@@ -94,8 +86,9 @@ final class MovieQuizViewController:UIViewController,
         activityIndicator.stopAnimating()
     }
     
-    private func show(currentIndex: Int) { questionFactory?.requestNextQuestion()
-}
+    private func show(currentIndex: Int) {
+        questionFactory?.requestNextQuestion()
+    }
     
     func showAnswerResult(isCorrect: Bool) {
         if isCorrect{
@@ -111,7 +104,7 @@ final class MovieQuizViewController:UIViewController,
     
 
     
-    private func show(quiz step: QuizStepViewModel) {
+    func show(quiz step: QuizStepViewModel) {
         yesButton.isEnabled = true
         noButton.isEnabled = true
         imageView.image = step.image
