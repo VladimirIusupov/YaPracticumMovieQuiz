@@ -162,6 +162,7 @@ final class MovieQuizViewController:UIViewController,
                     title: result.title,
                     message: result.text,
                     preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "Game results"
                 let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
                     guard let self = self else { return }
                     self.currentQuestionIndex = 0
