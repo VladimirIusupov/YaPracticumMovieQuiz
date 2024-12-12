@@ -109,7 +109,34 @@ final class MovieQuizViewController:UIViewController,
         }
     }
     
-    private func showNextQuestionOrResults() {
+
+    
+    private func show(quiz step: QuizStepViewModel) {
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
+        imageView.image = step.image
+        textLabel.text = step.question
+        counterLabel.text = step.questionNumber
+        imageView.layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    private func show(quiz result: QuizResultsViewModel) { // не верно
+        let alert = UIAlertController(
+                    title: result.title,
+                    message: result.text,
+                    preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "Game results"
+                let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
+                    guard let self = self else { return }
+                    self.presenter.resetQuestionIndex()
+                    self.correctAnswers = 0
+                    self.show(currentIndex: presenter.currentQuestionIndex)
+                }
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showNextQuestionOrResults() { // не верно
         if presenter.isLastQuestion() {
             let currentDate = Date()
             let gameResult = GameResult(correct: correctAnswers,
@@ -135,31 +162,6 @@ final class MovieQuizViewController:UIViewController,
             presenter.swithToNextQuestion()
             self.questionFactory?.requestNextQuestion()
         }
-    }
-    
-    private func show(quiz step: QuizStepViewModel) {
-        yesButton.isEnabled = true
-        noButton.isEnabled = true
-        imageView.image = step.image
-        textLabel.text = step.question
-        counterLabel.text = step.questionNumber
-        imageView.layer.borderColor = UIColor.clear.cgColor
-    }
-    
-    private func show(quiz result: QuizResultsViewModel) {
-        let alert = UIAlertController(
-                    title: result.title,
-                    message: result.text,
-                    preferredStyle: .alert)
-        alert.view.accessibilityIdentifier = "Game results"
-                let action = UIAlertAction(title: result.buttonText, style: .default) { [weak self] _ in
-                    guard let self = self else { return }
-                    self.presenter.resetQuestionIndex()
-                    self.correctAnswers = 0
-                    self.show(currentIndex: presenter.currentQuestionIndex)
-                }
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
     }
     
     private func showNetworkError(message: String) {
