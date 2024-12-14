@@ -3,13 +3,10 @@ import SwiftUI
 protocol NetworkRouting {
     func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void)
 }
-
 struct NetworkClient: NetworkRouting {
-    
     private enum NetworkError: Error {
         case codeError
     }
-    
     func fetch(url: URL, handler: @escaping (Result<Data, Error>) -> Void) {
         let request = URLRequest(url: url)
         
@@ -26,7 +23,6 @@ struct NetworkClient: NetworkRouting {
             guard let data = data else { return }
             handler(.success(data))
         }
-        
         task.resume()
     }
 }

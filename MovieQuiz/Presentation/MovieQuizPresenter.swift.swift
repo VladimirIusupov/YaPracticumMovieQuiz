@@ -1,28 +1,19 @@
 import UIKit
-final class MovieQuizPresenter: QuestionFactoryDelegate{
-   
-    
-    
+final class MovieQuizPresenter: QuestionFactoryDelegate {
     private let statisticService: StatisticServiceProtocol!
-    
     var currentQuestion: QuizQuestion?
     weak var viewController: MovieQuizViewControllerProtocol?
     let questionsAmount:Int = 10
     var currentQuestionIndex: Int = 0
     var correctAnswers:Int = 0
     var questionFactory: QuestionFactoryProtocol?
-    
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
-        
         statisticService = StatisticService()
-        
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
     }
-    // MARK: - QuestionFactoryDelegate
-    
     func didLoadDataFromServer(){
         viewController?.hideLoadingIndicator()
         questionFactory?.requestNextQuestion()
@@ -75,9 +66,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
     }
     private func proceedWithAnswer(isCorrect: Bool){
         didAnswer(isCorrectAnswer: isCorrect)
-
                 viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
-
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                     guard let self = self else { return }
                     self.proceedToNextQuestionOrResult()
@@ -89,23 +78,18 @@ final class MovieQuizPresenter: QuestionFactoryDelegate{
             let gameResult = GameResult(correct: correctAnswers,
                                         total: questionsAmount,
                                         date: currentDate)
-            
             statisticService.store(gameResult)
             guard let gamesCount = statisticService?.gamesCount,
                   let bestGame = statisticService?.bestGame,
                   let totalAccuracy = statisticService?.totalAccuracy else {return}
-            
             let bestGameDate = bestGame.date.dateTimeString
-            
             let message: [String] = [
             "Ваш результат: \(correctAnswers)",
             "Количество сыгранных квизов: \(gamesCount)",
             "Рекорд: \(bestGame.correct)/10 (\(bestGameDate))",
             "Средняя точность: \("\(String(format: "%.2f", totalAccuracy))%")"
             ]
-            
             let text = message.joined(separator: "\n")
-            
             let alertModel = QuizResultsViewModel(title: "Этот раунд окончен!",
                                                   text: text,
                                                   buttonText: "Сыграть еще раз")
