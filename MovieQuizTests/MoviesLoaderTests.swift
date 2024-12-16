@@ -2,10 +2,9 @@ import XCTest
 @testable import MovieQuiz
 
 class MovieLoaderTests: XCTestCase {
-    func testSuccesLoading() throws {
-        // Given
-        let StubNetworkClient = StubNetworkClient(emulateError: false)
-        let loader = MoviesLoader(networkClient: StubNetworkClient)
+    func testSuccessLoading() throws {
+        let stubNetworkClient = StubNetworkClient(emulateError: false)
+        let loader = MoviesLoader(networkClient: stubNetworkClient)
         let expectation = expectation(description: "Loading expectation")
         
         loader.loadMovies { result in
